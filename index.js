@@ -28,9 +28,15 @@ Chủ TK: NGUYEN VAN A
 });
 
 // Mua hàng
-bot.sendMessage(msg.chat.id, `🔥 Sản phẩm:
-- Acc game: 20k
-- Proxy: 25k`);
+bot.onText(/💰 Nạp tiền/, (msg) => {
+  bot.sendMessage(msg.chat.id, `🏦 Ngân hàng: Vietcombank
+STK: 123456789
+Chủ TK: NGUYEN VAN A
+📌 Nội dung: ID của bạn
+
+⚠️ Nạp xong gửi bill cho admin!`);
+});
+
 });
 
 // Liên hệ
