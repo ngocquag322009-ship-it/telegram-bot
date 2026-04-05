@@ -52,11 +52,12 @@ bot.on('message', (msg) => {
     // Chọn sản phẩm
     if (userState[chatId] === "choosing") {
         if (text === "1") {
-            userState[chatId] = { product: "Acc game", price: "20k" };
-            bot.sendMessage(chatId, "Nhập ID game của bạn:");
-        } else if (text === "2") {
-            userState[chatId] = { product: "Proxy", price: "25k" };
-            bot.sendMessage(chatId, "Nhập ID cần dùng proxy:");
+    userState[chatId] = { product: "Acc game", price: "20k" };
+    bot.sendMessage(chatId, "Nhập ID game:");
+} else if (text === "2") {
+    userState[chatId] = { product: "Proxy", price: "25k" };
+    bot.sendMessage(chatId, "Nhập ID cần mua:");
+}
         }
     }
 
@@ -68,8 +69,8 @@ bot.on('message', (msg) => {
 💰 Giá: ${order.price}
 
 🏦 Ngân hàng: Vietcombank
-STK: 123456789
-Chủ TK: NGUYEN VAN A
+STK: 9342337510
+Chủ TK: BUI NGOC QUANG
 
 📌 Nội dung: ${chatId}
 
@@ -88,5 +89,5 @@ ID: ${text}`);
 
 // Liên hệ
 bot.onText(/📞 Liên hệ/, (msg) => {
-    bot.sendMessage(msg.chat.id, "Liên hệ admin: @yourusername");
+    bot.sendMessage(msg.chat.id, "Liên hệ admin: @nquang32");
 });
