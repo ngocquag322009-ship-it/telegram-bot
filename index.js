@@ -1,4 +1,4 @@
-const TelegramBot = require('node-telegram-bot-api');
+h const TelegramBot = require('node-telegram-bot-api');
 
 const token = process.env.TOKEN;
 const bot = new TelegramBot(token, { polling: true });
@@ -18,24 +18,21 @@ bot.onText(/\/start/, (msg) => {
 });
 
 // Nạp tiền
-bot.sendMessage(msg.chat.id, `🏦 Ngân hàng: Vietcombank
-STK: 123456789
-Chủ TK: NGUYEN VAN A
-
-📌 Nội dung: ID của bạn
-
-⚠️ Nạp xong gửi bill cho admin!`);
-
-// Mua hàng
 bot.onText(/💰 Nạp tiền/, (msg) => {
-  bot.sendMessage(msg.chat.id, `🏦 Ngân hàng: Vietcombank
+    bot.sendMessage(msg.chat.id, `🏦 Ngân hàng: Vietcombank
 STK: 123456789
 Chủ TK: NGUYEN VAN A
+
 📌 Nội dung: ID của bạn
 
 ⚠️ Nạp xong gửi bill cho admin!`);
 });
 
+// Mua hàng
+bot.onText(/🛒 Mua hàng/, (msg) => {
+    bot.sendMessage(msg.chat.id, `🔥 Sản phẩm:
+- Acc game: 20k
+- Proxy: 25k`);
 });
 
 // Liên hệ
