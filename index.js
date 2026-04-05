@@ -4,7 +4,7 @@ const token = process.env.TOKEN;
 const bot = new TelegramBot(token, { polling: true });
 
 // ID ADMIN (đổi thành ID của bạn)
-const ADMIN_ID = 123456789;
+const ADMIN_ID = 7608726520;
 
 // Lưu trạng thái user
 let userState = {};
@@ -26,8 +26,8 @@ bot.onText(/\/start/, (msg) => {
 // Nạp tiền
 bot.onText(/💰 Nạp tiền/, (msg) => {
     bot.sendMessage(msg.chat.id, `🏦 Ngân hàng: Vietcombank
-STK: 123456789
-Chủ TK: NGUYEN VAN A
+STK: 9342337510
+Chủ TK: BUI NGOC QUANG
 
 📌 Nội dung: ID Telegram của bạn
 
