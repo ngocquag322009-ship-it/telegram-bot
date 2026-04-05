@@ -25,7 +25,6 @@ Chủ TK: NGUYEN VAN A
 📌 Nội dung: ID của bạn
 
 ⚠️ Nạp xong gửi bill cho admin!`);
-});
 
 // Mua hàng
 bot.onText(/💰 Nạp tiền/, (msg) => {
