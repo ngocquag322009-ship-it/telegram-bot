@@ -20,12 +20,12 @@ bot.onText(/\/start/, (msg) => {
 // Nạp tiền
 bot.onText(/💰 Nạp tiền/, (msg) => {
     bot.sendMessage(msg.chat.id, `🏦 Ngân hàng: Vietcombank
-STK: 123456789
-Chủ TK: NGUYEN VAN A
+STK: 9342337510
+Chủ TK: BUI NGOC QUANG
 
 📌 Nội dung: ID của bạn
 
-⚠️ Nạp xong gửi bill cho admin!`);
+⚠️ Nạp xong gửi bill lên bot!`);
 });
 
 // Mua hàng
@@ -37,5 +37,5 @@ bot.onText(/🛒 Mua hàng/, (msg) => {
 
 // Liên hệ
 bot.onText(/📞 Liên hệ/, (msg) => {
-    bot.sendMessage(msg.chat.id, "Liên hệ admin: @yourusername");
+    bot.sendMessage(msg.chat.id, "Liên hệ admin: @nquang32");
 });
