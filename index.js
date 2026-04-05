@@ -18,9 +18,7 @@ bot.onText(/\/start/, (msg) => {
 });
 
 // Nạp tiền
-bot.onText(/💰 Nạp tiền/, (msg) => {
-    bot.sendMessage(msg.chat.id,
-`🏦 Ngân hàng: Vietcombank
+bot.sendMessage(msg.chat.id, `🏦 Ngân hàng: Vietcombank
 STK: 123456789
 Chủ TK: NGUYEN VAN A
 
@@ -30,9 +28,7 @@ Chủ TK: NGUYEN VAN A
 });
 
 // Mua hàng
-bot.onText(/🛒 Mua hàng/, (msg) => {
-    bot.sendMessage(msg.chat.id,
-`🔥 Sản phẩm:
+bot.sendMessage(msg.chat.id, `🔥 Sản phẩm:
 - Acc game: 20k
 - Proxy: 25k`);
 });
