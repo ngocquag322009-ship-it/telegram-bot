@@ -1,101 +1,63 @@
-const TelegramBot = require('node-telegram-bot-api');
+const { Telegraf } = require('telegraf')
 
-// 🔑 TOKEN (dán token mới vào đây)
-const token = "8629662642:AAEnfVoLj31PlYw0eSyJpg0EeyCTtOUfP_U";
+const bot = new Telegraf(process.env.BOT_TOKEN)
 
-// 👤 ID ADMIN (đổi thành ID của bạn)
-const ADMIN_ID = 6200196373;
+// cấu hình
+let bet = 1000
+let currentBet = bet
+let maxStep = 10
+let step = 0
 
-const bot = new TelegramBot(token, { polling: true });
+// random chọn cửa
+function randomChoice() {
+  const arr = ["T", "X"]
+  return arr[Math.floor(Math.random() * arr.length)]
+}
 
-// lưu trạng thái user
-let userState = {};
+// gửi lệnh cược
+async function play(ctx) {
+  const choice = randomChoice()
+  const msg = `${choice} ${currentBet}`
 
-// START
-bot.onText(/\/start/, (msg) => {
-    bot.sendMessage(msg.chat.id, "👋 Chào bạn! Chọn chức năng:", {
-        reply_markup: {
-            keyboard: [
-                ["💰 Nạp tiền"],
-                ["🛒 Mua hàng"],
-                ["📞 Liên hệ"]
-            ],
-            resize_keyboard: true
-        }
-    });
-});
+  await ctx.telegram.sendMessage(process.env.GROUP_ID, msg)
+  console.log("Đã cược:", msg)
+}
 
-// NẠP TIỀN
-bot.onText(/💰 Nạp tiền/, (msg) => {
-    bot.sendMessage(msg.chat.id, `
-🏦 Ngân hàng: Vietcombank
-STK: 9342337510
-Chủ TK: BUI NGOC QUANG
+// giả lập kết quả (vì không đọc được bot kia)
+function fakeResult() {
+  return Math.random() > 0.5 ? "win" : "lose"
+}
 
-📌 Nội dung: ID Telegram của bạn
-⚠️ Nạp xong gửi bill cho admin!
-    `);
-});
+// loop auto
+async function startAuto(ctx) {
+  setInterval(async () => {
+    let result = fakeResult()
 
-// MUA HÀNG
-bot.onText(/🛒 Mua hàng/, (msg) => {
-    bot.sendMessage(msg.chat.id, `
-🔥 Sản phẩm:
-1. Acc game - 20k
-2. Proxy - 25k
-
-👉 Nhập số (1 hoặc 2) để chọn
-    `);
-
-    userState[msg.chat.id] = "choosing";
-});
-
-// XỬ LÝ TIN NHẮN
-bot.on('message', (msg) => {
-    const chatId = msg.chat.id;
-    const text = msg.text;
-
-    // chọn sản phẩm
-    if (userState[chatId] === "choosing") {
-        if (text === "1") {
-            userState[chatId] = { product: "Acc game", price: "20k" };
-            bot.sendMessage(chatId, "🎮 Nhập ID game:");
-        } else if (text === "2") {
-            userState[chatId] = { product: "Proxy", price: "25k" };
-            bot.sendMessage(chatId, "🌐 Nhập ID cần mua:");
-        }
+    if (result === "win") {
+      currentBet = bet
+      step = 0
+      console.log("WIN -> reset")
+    } else {
+      step++
+      currentBet *= 2
+      console.log("LOSE -> gấp:", currentBet)
     }
 
-    // nhập ID xong
-    else if (userState[chatId] && typeof userState[chatId] === "object") {
-        const order = userState[chatId];
-
-        bot.sendMessage(chatId, `
-✅ Bạn đã chọn: ${order.product}
-💰 Giá: ${order.price}
-
-🏦 Ngân hàng: Vietcombank
-STK: 9342337510
-Chủ TK: BUI NGOC QUANG
-
-📌 Nội dung: ${chatId}
-⚠️ Chuyển khoản xong gửi bill!
-        `);
-
-        // gửi admin
-        bot.sendMessage(ADMIN_ID, `
-📦 Đơn mới:
-User: ${chatId}
-Sản phẩm: ${order.product}
-Giá: ${order.price}
-ID: ${text}
-        `);
-
-        userState[chatId] = null;
+    if (step >= maxStep) {
+      console.log("Đạt max -> reset")
+      currentBet = bet
+      step = 0
     }
-});
 
-// LIÊN HỆ
-bot.onText(/📞 Liên hệ/, (msg) => {
-    bot.sendMessage(msg.chat.id, "📩 Liên hệ admin: @nquang32");
-});
+    await play(ctx)
+
+  }, 20000) // 20 giây cược 1 lần
+}
+
+// lệnh start
+bot.start((ctx) => {
+  ctx.reply("Bot bắt đầu auto cược...")
+  startAuto(ctx)
+})
+
+bot.launch()
